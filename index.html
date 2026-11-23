@@ -541,8 +541,41 @@ if(fine&&!reduce){
   // portrait parallax
   var photo=document.getElementById('photo');
   addEventListener('pointermove',function(e){if(scrollY>innerHeight)return;
-    var nx=e.clientX/innerWidth-.5,ny=e.clientY/innerHeight-.5;photo.style.transform='perspective(900px) rotateY('+nx*12+'deg) rotateX('+ny*-10+'deg)';});
+    var nx=e.clientX/innerWidth-.5,ny=e.clientY/innerHeight-.5;photo.style.transform='perspective(900px) rotateY('+nx*6+'deg) rotateX('+ny*-5+'deg)';});
 }
+
+/* ---------- head follows the cursor / finger ----------
+   63 AI-generated frames: 9 yaw steps (left→right) x 7 pitch steps (up→down),
+   files /img/head/f_<row>_<col>.webp. Loaded after the page, swapped on move. */
+(function(){
+  var COLS=9,ROWS=7,CR=4,RR=3,img=document.querySelector('#photo img'),photo=document.getElementById('photo');
+  var frames=[],loaded=0,ready=false,tx=0,ty=0,cx=0,cy=0,shown='',idle=null;
+  function load(){
+    for(var r=0;r<ROWS;r++)for(var c=0;c<COLS;c++){(function(r,c){var im=new Image();im.decoding='async';
+      im.onload=function(){if(++loaded===ROWS*COLS){ready=true;img.src=frames[RR][CR].src;tick();}};
+      im.src='/img/head/f_'+r+'_'+c+'.webp';(frames[r]=frames[r]||[])[c]=im;})(r,c);}
+  }
+  function aim(x,y){
+    var b=photo.getBoundingClientRect(),hx=b.left+b.width*.5,hy=b.top+b.height*.25;  // roughly the face
+    tx=Math.max(-1,Math.min(1,(x-hx)/(innerWidth*.4)));
+    ty=Math.max(-1,Math.min(1,(y-hy)/(innerHeight*.45)));
+    clearTimeout(idle);
+  }
+  function home(delay){clearTimeout(idle);idle=setTimeout(function(){tx=0;ty=0},delay)}
+  function tick(){
+    cx+=(tx-cx)*(reduce?1:.18);cy+=(ty-cy)*(reduce?1:.18);
+    var c=Math.round((cx+1)/2*(COLS-1)),r=Math.round((cy+1)/2*(ROWS-1)),key=r+'_'+c;
+    if(key!==shown){shown=key;img.src=frames[r][c].src;}
+    requestAnimationFrame(tick);
+  }
+  addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;aim(e.clientX,e.clientY)},{passive:true});
+  document.addEventListener('pointerleave',function(){home(600)});
+  // touch: follow the finger while it is on the screen, then look back at the visitor
+  addEventListener('touchstart',function(e){var t=e.touches[0];aim(t.clientX,t.clientY)},{passive:true});
+  addEventListener('touchmove',function(e){var t=e.touches[0];aim(t.clientX,t.clientY)},{passive:true});
+  addEventListener('touchend',function(){home(1200)},{passive:true});
+  if(document.readyState==='complete')setTimeout(load,300);else addEventListener('load',function(){setTimeout(load,300)});
+})();
 
 /* ---------- particle trail + click bursts ---------- */
 (function(){
