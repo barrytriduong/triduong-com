@@ -576,7 +576,9 @@ if(fine&&!reduce){
   addEventListener('touchstart',function(e){var t=e.touches[0];aim(t.clientX,t.clientY)},{passive:true});
   addEventListener('touchmove',function(e){var t=e.touches[0];aim(t.clientX,t.clientY)},{passive:true});
   addEventListener('touchend',function(){home(1200)},{passive:true});
-  if(document.readyState==='complete')setTimeout(load,300);else addEventListener('load',function(){setTimeout(load,300)});
+  // only start if the frames are deployed (one cheap probe first)
+  function start(){fetch('/img/head/f_3_4.webp',{method:'HEAD'}).then(function(r){if(r.ok)load()}).catch(function(){})}
+  if(document.readyState==='complete')setTimeout(start,300);else addEventListener('load',function(){setTimeout(start,300)});
 })();
 
 /* ---------- particle trail + click bursts ---------- */
