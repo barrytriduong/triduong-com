@@ -18,3 +18,10 @@
   from = "/vi"
   to = "/?lang=vi"
   status = 302
+
+# CV sources and PDFs (contain phone number) are kept in the repo but never served
+[[redirects]]
+  from = "/cv/*"
+  to = "/"
+  status = 404
+  force = true
