@@ -538,12 +538,12 @@ if(fine&&!reduce){
 }
 
 /* ---------- head follows the cursor / finger ----------
-   63 AI-generated frames: 9 yaw steps (left→right) x 7 pitch steps (up→down),
+   117 AI-generated frames: 13 yaw steps (left→right) x 9 pitch steps (up→down),
    files /img/head/f_<row>_<col>.webp. Loaded after the page. Instead of jumping
    between frames, the 4 nearest frames are blended (bilinear, additive) on a canvas,
    so the head turns continuously. */
 (function(){
-  var COLS=9,ROWS=7,CR=4,RR=3,img=document.querySelector('#photo img'),photo=document.getElementById('photo');
+  var COLS=13,ROWS=9,CR=6,RR=4,img=document.querySelector('#photo img'),photo=document.getElementById('photo');
   var frames=[],loaded=0,tx=0,ty=0,cx=0,cy=0,lastX=null,lastY=null,idle=null,cv,ctx;
   function load(){
     for(var r=0;r<ROWS;r++)for(var c=0;c<COLS;c++){(function(r,c){var im=new Image();im.decoding='async';
@@ -592,7 +592,7 @@ if(fine&&!reduce){
   addEventListener('touchmove',function(e){var t=e.touches[0];aim(t.clientX,t.clientY)},{passive:true});
   addEventListener('touchend',function(){home(1200)},{passive:true});
   // only start if the frames are deployed (one cheap probe first)
-  function start(){fetch('/img/head/f_3_4.webp',{method:'HEAD'}).then(function(r){if(r.ok)load()}).catch(function(){})}
+  function start(){fetch('/img/head/f_4_6.webp',{method:'HEAD'}).then(function(r){if(r.ok)load()}).catch(function(){})}
   if(document.readyState==='complete')setTimeout(start,300);else addEventListener('load',function(){setTimeout(start,300)});
 })();
 
