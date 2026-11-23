@@ -233,6 +233,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
       <div class="cta">
         <a class="btn primary mag" href="#contact" data-i18n="cta.contact">→ get in touch</a>
         <a class="btn mag" href="https://www.linkedin.com/in/tri2212" target="_blank" rel="noopener">linkedin ↗</a>
+        <a class="btn mag" id="cvdl" href="/files/Duong_Minh_Tri_CV.pdf" download data-i18n="cta.cv">download cv ⤓</a>
       </div>
     </div>
     <div class="photo" id="photo">
@@ -386,7 +387,7 @@ var VI={
  'nav.about':'giới thiệu','nav.exp':'kinh nghiệm','nav.skills':'kỹ năng','nav.edu':'học vấn','nav.contact':'liên hệ',
  'name':'Dương<br><span class="grad">Minh Trí</span>',
  'role':'<b>Human Data Manager</b> · Chất lượng &amp; Đánh giá Dữ liệu AI. Tôi giúp dữ liệu huấn luyện AI trở nên chính xác, nhất quán và đáng tin cậy.',
- 'cta.contact':'→ liên hệ với tôi',
+ 'cta.contact':'→ liên hệ với tôi','cta.cv':'tải CV ⤓',
  'stat.years':'năm với dữ liệu AI','stat.cos':'công ty AI','stat.sla':'SLA kiểm duyệt','stat.langs':'ngôn ngữ làm việc',
  'h.about':'Giới thiệu',
  'about.1':'Human Data Manager với hơn 9 năm kinh nghiệm về dữ liệu huấn luyện AI, đảm bảo chất lượng và đánh giá cho các chương trình toàn cầu.',
@@ -480,6 +481,7 @@ function setLang(lang,first){
   curLang=lang;document.documentElement.lang=lang;
   document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.dataset.i18n;el.innerHTML=lang==='vi'&&VI[k]!=null?VI[k]:EN[k]});
   img.alt=lang==='vi'?VI['photo.alt']:EN['photo.alt'];
+  document.getElementById('cvdl').href=lang==='vi'?'/files/Duong_Minh_Tri_CV_VI.pdf':'/files/Duong_Minh_Tri_CV.pdf';
   document.querySelectorAll('[data-i18n-ph]').forEach(function(el){var k=el.dataset.i18nPh;el.placeholder=lang==='vi'&&VI[k]?VI[k]:EN[k]});
   fstatus.textContent='';fstatus.className='fstatus';
   document.title=META[lang].title;document.querySelector('meta[name=description]').content=META[lang].desc;

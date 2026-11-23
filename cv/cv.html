@@ -80,7 +80,7 @@ footer a{color:var(--violet);text-decoration:none}
     <div class="photo"><img src="headshot.png" alt=""></div>
     <div class="sh" data-t="contact"></div>
     <div class="ct">
-      <div><span class="ic">✆</span><span><small data-t="phone"></small>+84 986 372 906</span></div>
+      <div class="phone-row"><span class="ic">✆</span><span><small data-t="phone"></small>+84 986 372 906</span></div>
       <div><span class="ic">@</span><span><small>email</small>tri2212@gmail.com</span></div>
       <div><span class="ic">in</span><span><small>linkedin</small>linkedin.com/in/tri2212</span></div>
       <div><span class="ic">↗</span><span><small>web</small>triduong.com</span></div>
@@ -177,6 +177,7 @@ vi:{
   ['Giáo viên & Điều phối viên tiếng Anh · Đại học Nông Lâm','09/2010 — 05/2014','Giảng dạy TOEIC, IELTS, YLE & tiếng Anh giao tiếp; tổ chức các kỳ thi quốc gia.']]
 }};
 var L=new URLSearchParams(location.search).get('lang')==='vi'?'vi':'en',t=T[L];
+if(new URLSearchParams(location.search).get('public')==='1'){var pr=document.querySelector('.phone-row');pr.parentNode.removeChild(pr);}
 document.documentElement.lang=L;document.title=(L==='vi'?'Dương Minh Trí':'Duong Minh Tri')+' · CV';
 function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 document.querySelectorAll('[data-t]').forEach(function(el){var v=t[el.dataset.t];el.innerHTML=(el.dataset.t==='name'||el.dataset.t==='summary')?v:esc(v)});
