@@ -559,8 +559,10 @@ if(fine&&!reduce){
   }
   function aim(x,y){
     var b=photo.getBoundingClientRect(),hx=b.left+b.width*.5,hy=b.top+b.height*.25;  // roughly the face
-    tx=Math.max(-1,Math.min(1,(x-hx)/(innerWidth*.4)));
-    ty=Math.max(-1,Math.min(1,(y-hy)/(innerHeight*.45)));
+    // scale by the space on each side of the face, so every screen edge reaches the full turn
+    var dx=x-hx,dy=y-hy;
+    tx=Math.max(-1,Math.min(1,dx/(.85*(dx>0?Math.max(innerWidth-hx,80):Math.max(hx,80)))));
+    ty=Math.max(-1,Math.min(1,dy/(.85*(dy>0?Math.max(innerHeight-hy,80):Math.max(hy,80)))));
     clearTimeout(idle);
   }
   function home(delay){clearTimeout(idle);idle=setTimeout(function(){tx=0;ty=0},delay)}
